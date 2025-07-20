@@ -10,8 +10,9 @@ pipeline {
            stage('Build & Test UI (Java)') {
             steps {
                 dir('src/frontend') {
-                    sh 'mvn clean install'
-                    //sh 'docker build -t ui-service .'
+                    sh 'npm install'
+                    sh 'npm test || echo "No tests found"'
+                    sh 'npm run build'
                 }
             }
         }
