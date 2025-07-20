@@ -9,7 +9,7 @@ pipeline {
     stages {
            stage('Build & Test UI (Java)') {
             steps {
-                dir('src/frontend') {
+                dir('src/apps/ui') {
                     sh 'npm install'
                     sh 'npm test || echo "No tests found"'
                     sh 'npm run build'
