@@ -16,8 +16,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                      withDockerRegistry(credentialsId: 'dockerhub-creds')
+                        //                     withDockerRegistry(credentialsId: 'dockerhub-creds', url: 'https://hub.docker.com/u/jay24666') {
+                        //      sh "docker build -t ${IMAGE_NAME} ."// some block
+                        // }
+                      withDockerRegistry(credentialsId: 'dockerhub-creds'){
                     sh "docker build -t ${IMAGE_NAME} ."  // example for frontend
+                      }
                 }
             }
         }
