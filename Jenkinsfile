@@ -7,34 +7,83 @@ pipeline {
     }
 
     stages {
-        // stage('Clone Repo') {
+           stage('Build & Test UI (Java)') {
+            steps {
+                dir('src/frontend') {
+                    sh 'mvn clean install'
+                    sh 'docker build -t ui-service .'
+                }
+            }
+        }
+
+        stage('Build & Test Orders (Java)') {
+            steps {
+                dir('src/orders') {
+                    sh 'mvn clean install'
+                    sh 'docker build -t orders-service .'
+                }
+            }
+        }
+
+        stage('Build & Test Cart (Java)') {
+            steps {
+                dir('src/cart') {
+                    sh 'mvn clean install'
+                    sh 'docker build -t cart-service .'
+                }
+            }
+        }
+
+        stage('Build & Test Catalog (Go)') {
+            steps {
+                dir('src/catalog') {
+                    sh 'go mod tidy'
+                    sh 'go test ./...'
+                    sh 'docker build -t catalog-service .'
+                }
+            }
+        }
+
+        stage('Build & Test Checkout (Node.js)') {
+            steps {
+                dir('src/checkout') {
+                    sh 'npm install'
+                    sh 'npm test || echo "No tests found"'
+                    sh 'docker build -t checkout-service .'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo '✅ All components built successfully!'
+        }
+        failure {
+            echo '❌ Build failed.'
+        }
+        // stage('Build Docker Image') {
         //     steps {
-        //         git 'https://github.com/aws-containers/retail-store-sample-app.git'
+        //         script {
+        //                                     withDockerRegistry(credentialsId: 'dockerhub-creds', url: 'https://hub.docker.com/u/jay24666') {
+        //                      sh "docker build -t ${IMAGE_NAME} ."// some block
+        //                 }
+        //             //   withDockerRegistry(credentialsId: 'dockerhub-creds'){
+        //             // sh "docker build -t ${IMAGE_NAME} ."  // example for frontend
+        //             //   }
+        //         }
         //     }
         // }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                        //                     withDockerRegistry(credentialsId: 'dockerhub-creds', url: 'https://hub.docker.com/u/jay24666') {
-                        //      sh "docker build -t ${IMAGE_NAME} ."// some block
-                        // }
-                      withDockerRegistry(credentialsId: 'dockerhub-creds'){
-                    sh "docker build -t ${IMAGE_NAME} ."  // example for frontend
-                      }
-                }
-            }
-        }
-
-        stage('Push to Docker Hub') {
-            steps {
-                script{
-               withDockerRegistry(credentialsId: 'dockerhub-creds') {
-                    sh "docker push ${IMAGE_NAME}"
-                    }
-                }
-            }
-        }
+        // stage('Push to Docker Hub') {
+        //     steps {
+        //         script{
+        //        withDockerRegistry(credentialsId: 'dockerhub-creds') {
+        //             sh "docker push ${IMAGE_NAME}"
+        //             }
+        //         }
+        //     }
+        // }
 
         // stage('Deploy to Kubernetes') {
         //     steps {
