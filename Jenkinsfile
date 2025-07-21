@@ -19,8 +19,8 @@ pipeline {
         stage('Build & Test Orders (Java)') {
             steps {
                 dir('src/orders') {
-                    sh 'mvn install'
-                    //sh 'docker build -t orders-service .'
+                    sh 'mvn clean install'
+                    sh 'docker build -t orders-service .'
                 }
             }
         }
@@ -29,7 +29,7 @@ pipeline {
             steps {
                 dir('src/cart') {
                     sh 'mvn clean install'
-                    //sh 'docker build -t cart-service .'
+                    sh 'docker build -t cart-service .'
                 }
             }
         }
@@ -39,7 +39,7 @@ pipeline {
                 dir('src/catalog') {
                     sh 'go mod tidy'
                     sh 'go test ./...'
-                   // sh 'docker build -t catalog-service .'
+                    sh 'docker build -t catalog-service .'
                 }
             }
         }
@@ -49,7 +49,7 @@ pipeline {
                 dir('src/checkout') {
                     sh 'npm install'
                     sh 'npm test || echo "No tests found"'
-                    //sh 'docker build -t checkout-service .'
+                    sh 'docker build -t checkout-service .'
                 }
             }
         }
