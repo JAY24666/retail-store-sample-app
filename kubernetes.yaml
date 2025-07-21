@@ -109,7 +109,7 @@ spec:
     metadata:
       annotations:
         prometheus.io/path: /metrics
-        prometheus.io/port: "8080"
+        prometheus.io/port: "8081"
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: catalog
@@ -138,12 +138,12 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8081
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: 8081
           resources:
             limits:
               memory: 256Mi
@@ -322,7 +322,7 @@ spec:
     metadata:
       annotations:
         prometheus.io/path: /actuator/prometheus
-        prometheus.io/port: "8080"
+        prometheus.io/port: "8081"
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: carts
@@ -352,12 +352,12 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8081
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8081
             initialDelaySeconds: 10
           resources:
             limits:
@@ -559,7 +559,7 @@ spec:
     metadata:
       annotations:
         prometheus.io/path: /actuator/prometheus
-        prometheus.io/port: "8080"
+        prometheus.io/port: "8081"
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: orders
@@ -822,7 +822,7 @@ spec:
     metadata:
       annotations:
         prometheus.io/path: /metrics
-        prometheus.io/port: "8080"
+        prometheus.io/port: "8081"
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: checkout
@@ -849,12 +849,12 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8081
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /health
-              port: 8080
+              port: 8081
           resources:
             limits:
               memory: 256Mi
@@ -984,7 +984,7 @@ spec:
     metadata:
       annotations:
         prometheus.io/path: /actuator/prometheus
-        prometheus.io/port: "8080"
+        prometheus.io/port: "8081"
         prometheus.io/scrape: "true"
       labels:
         app.kubernetes.io/name: ui
@@ -1028,12 +1028,12 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
-              containerPort: 8080
+              containerPort: 8081
               protocol: TCP
           readinessProbe:
             httpGet:
               path: /actuator/health/readiness
-              port: 8080
+              port: 8081
             initialDelaySeconds: 10
           resources:
             limits:
