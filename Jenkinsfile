@@ -7,6 +7,15 @@ pipeline {
     }
 
     stages {
+
+         stage('Build & Test UI (Java)') {
+            steps {
+                dir('src/ui') {
+                    sh 'mvn clean install'
+                    sh 'docker build -t ui-service .'
+                }
+            }
+        }
         stage('Build & Test Orders (Java)') {
             steps {
                 dir('src/orders') {
@@ -41,16 +50,6 @@ pipeline {
                     sh 'npm install'
                     sh 'npm test || echo "No tests found"'
                     //sh 'docker build -t checkout-service .'
-                }
-            }
-        }
-
-                   stage('Build & Test UI (Java)') {
-            steps {
-                dir('src/apps/ui') {
-                    sh 'npm install'
-                    sh 'npm test || echo "No tests found"'
-                    sh 'npm run build'
                 }
             }
         }
