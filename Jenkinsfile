@@ -34,14 +34,14 @@ pipeline {
             }
         }
 
-        stage('Build & Test Cart (Java)') {
-            steps {
-                dir('src/cart') {
-                    sh 'mvn clean install'
-                    sh 'docker build -t cart-service .'
-                }
-            }
-        }
+        // stage('Build & Test Cart (Java)') {
+        //     steps {
+        //         dir('src/cart') {
+        //             sh 'mvn clean install'
+        //             sh 'docker build -t cart-service .'
+        //         }
+        //     }
+        // }
 
         stage('Build & Test Checkout (Node.js)') {
             steps {
@@ -53,14 +53,6 @@ pipeline {
             }
         }
     }
-
-    post {
-        success {
-            echo '✅ All components built successfully!'
-        }
-        failure {
-            echo '❌ Build failed.'
-        }
         // stage('Build Docker Image') {
         //     steps {
         //         script {
